@@ -13,3 +13,5 @@
 - StrokeStyle
 - lineWidth
 
+- `Stroke()`
+
