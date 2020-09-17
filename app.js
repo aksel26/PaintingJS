@@ -1,6 +1,6 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext('2d');
-
+const colors = document.getElementsByClassName("jsColor");
 // CSS에 사이즈를 지정한 것 말고 실제 캔버스 크기를 지정해 주어야 한다.
 canvas.width = 700;
 canvas.height = 700;
@@ -37,16 +37,22 @@ function onMouseMove(event) {
     }
 }
 
-
-function onMousedown(event) {
-    painting = true;
+function handleColorClick(event){
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
 }
 
-if (canvas) {
+if (canvas) { 
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
 }
+
+
+// Array.from 메서드
+// : object로부터 array를 만들어준다.
+Array.from(colors).forEach(color => color.addEventListener("click",handleColorClick) );
+
 
 
