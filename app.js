@@ -3,12 +3,16 @@ const ctx = canvas.getContext('2d');
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
+const INITIAL_COLOR = "black"
+const CANVAS_SIZE = 700;
 // CSS에 사이즈를 지정한 것 말고 실제 캔버스 크기를 지정해 주어야 한다.
-canvas.width = 700;
-canvas.height = 700;
+canvas.width = CANVAS_SIZE;
+canvas.height = CANVAS_SIZE;
 
-ctx.strokeStyle = "black";
+ctx.strokeStyle = INITIAL_COLOR;
+ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 2.5;
+
 
 let painting = false;
 let filling = false;
@@ -43,6 +47,7 @@ function onMouseMove(event) {
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;
     ctx.strokeStyle = color;
+    ctx.fillStyle = color;
 }
 
 function handleRangeChange(event) {
@@ -50,15 +55,22 @@ function handleRangeChange(event) {
     ctx.lineWidth = size;
 }
 
-function handleModeClick(event){
-    if(filling){
+function handleModeClick() {
+    if (filling) {
         filling = false;
-        mode.innerText = "Fill"
-    }else{
+        mode.innerText = "Fill";
+
+    } else {
         filling = true;
         mode.innerText = "Paint"
     }
 
+}
+
+function handleCanvasClick() {
+    if (filling) {
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
 if (canvas) {
@@ -66,6 +78,7 @@ if (canvas) {
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("click", handleCanvasClick);
 }
 
 
@@ -79,6 +92,6 @@ if (range) {
 }
 
 
-if(mode){
+if (mode) {
     mode.addEventListener("click", handleModeClick);
 }
